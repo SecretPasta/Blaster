@@ -1,2 +1,4 @@
-#Unreal Engine 5 Multiplayer Shooter
-An Unreal Engine 5 Multiplayer game I'm making as part of course on udemy
+# Unreal Engine 5 C++ Multiplayer Shooter  
+
+Welcome to my journy learning how to make a Multiplayer Shooter in Unreal Engine 5.4.  
+This is part of the "Unreal Engine 5 C++ Multiplayer Shooter" course on Udemy!
