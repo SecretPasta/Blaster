@@ -19,10 +19,19 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* DisplayText;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* PlayerNameText;
+ 
+
 	void SetDisplayText(FString TextToDisplay);
 
 	UFUNCTION(BlueprintCallable)
 	void ShowPlayerNetRole(APawn* InPawn);
+
+	UFUNCTION(BlueprintCallable)
+	void ShowPlayerName(APawn* InPawn);
+
+	void SetPlayerNameText(FString TextToDisplay);
 
 protected:
 
