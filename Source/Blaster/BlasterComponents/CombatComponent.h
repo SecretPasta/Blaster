@@ -38,6 +38,9 @@ protected:
 	UFUNCTION()
 	void OnRep_EquippedWeapon();
 
+	UFUNCTION()
+	void OnRep_bAiming();
+
 private:
 
 	class ABlasterCharacter* Character;

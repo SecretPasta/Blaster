@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
+
 void UBlasterAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
@@ -34,6 +35,7 @@ void UBlasterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 	bWeaponEquipped = BlasterCharacter->IsWeaponEquipped();
 	bIsCrouched = BlasterCharacter->bIsCrouched;
 	bAiming = BlasterCharacter->IsAiming();
+
 
 	//Offset Yaw for strafing
 	FRotator AimRotation = BlasterCharacter->GetBaseAimRotation();

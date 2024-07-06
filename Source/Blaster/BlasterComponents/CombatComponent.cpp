@@ -14,7 +14,7 @@
 UCombatComponent::UCombatComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
-
+	
 	BaseWalkSpeed = 600.f;
 	AimWalkSpeed = 450.f;
 }
@@ -52,7 +52,8 @@ void UCombatComponent::ServerSetAiming_Implementation(bool bIsAiming)
 
 void UCombatComponent::OnRep_EquippedWeapon()
 {
-	if (EquippedWeapon && Character) {
+	if (EquippedWeapon && Character)
+	{
 		Character->GetCharacterMovement()->bOrientRotationToMovement = false;
 		Character->bUseControllerRotationYaw = true;
 	}
@@ -71,7 +72,6 @@ void UCombatComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 	DOREPLIFETIME(UCombatComponent, EquippedWeapon);
 	DOREPLIFETIME(UCombatComponent, bAiming);
-
 }
 
 //Somewhere here is the thing that prevents free aiming when the gun is equipped
@@ -85,7 +85,8 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 	EquippedWeapon = WeaponToEquip;
 	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 	const USkeletalMeshSocket* HandSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"));
-	if (HandSocket) {
+	if (HandSocket)
+	{
 		HandSocket->AttachActor(EquippedWeapon, Character->GetMesh());
 	}
 	EquippedWeapon->SetOwner(Character);
