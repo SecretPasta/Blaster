@@ -43,7 +43,7 @@ void UBlasterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 	YawOffset = DeltaRotation.Yaw;
 
 
-
+	//Offset for Leaning
 	CharacterRotationLastFrame = CharacterRotation;
 	CharacterRotation = BlasterCharacter->GetActorRotation();
 	const FRotator Delta = UKismetMathLibrary::NormalizedDeltaRotator(CharacterRotation, CharacterRotationLastFrame);
