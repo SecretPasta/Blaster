@@ -38,8 +38,8 @@ protected:
 	UFUNCTION()
 	void OnRep_EquippedWeapon();
 
-	UFUNCTION()
-	void OnRep_bAiming();
+	//UFUNCTION()
+	//void OnRep_bAiming();
 
 private:
 

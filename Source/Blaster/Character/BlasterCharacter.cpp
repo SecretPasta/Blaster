@@ -150,7 +150,6 @@ void ABlasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 
 void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 {
-	UE_LOG(LogTemp, Warning, TEXT("The weapon is overlapping!!!"));
 	if (OverlappingWeapon) {
 		OverlappingWeapon->ShowPickupWidget(true);
 	}
