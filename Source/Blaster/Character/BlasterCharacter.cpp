@@ -10,6 +10,7 @@
 #include "Blaster/Weapon/Weapon.h"
 #include "Blaster/BlasterComponents/CombatComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ABlasterCharacter::ABlasterCharacter()
 {
@@ -59,6 +60,7 @@ void ABlasterCharacter::BeginPlay()
 void ABlasterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	AimOffset(DeltaTime);
 }
 
 // Called to bind functionality to input
@@ -183,6 +185,39 @@ void ABlasterCharacter::AimButtonReleased()
 		Combat->SetAiming(false);
 	}
 }
+
+void ABlasterCharacter::AimOffset(float DeltaTime)
+{
+	if (Combat && Combat->EquippedWeapon == nullptr) {
+		return;
+	}
+
+
+	FVector Velocity = GetVelocity();
+	Velocity.Z = 0.f;
+	float  Speed = Velocity.Size();
+
+	bool bIsInAir = GetCharacterMovement()->IsFalling();
+
+	if (Speed == 0.f && !bIsInAir) { //Standing still and not jumping
+		FRotator CurrentAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		FRotator DeltaAimRotaiton = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRotation, StratingAimRotation);
+		AO_Yaw = DeltaAimRotaiton.Yaw;
+		bUseControllerRotationYaw = false;
+
+	}
+	if (Speed > 0.f || bIsInAir) { //Running or Jumping
+		StratingAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		AO_Yaw = 0.f;
+		bUseControllerRotationYaw = true;
+
+	}
+
+	AO_Pitch = GetBaseAimRotation().Pitch;
+
+
+}
+
 
 void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 {
