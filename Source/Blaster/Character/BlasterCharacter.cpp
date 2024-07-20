@@ -220,8 +220,6 @@ void ABlasterCharacter::AimOffset(float DeltaTime)
 		FVector2D OutRange(-90.f, 0.f);
 		AO_Pitch = FMath::GetMappedRangeValueClamped(InRange, OutRange, AO_Pitch);
 
-
-
 	}
 
 
@@ -246,6 +244,15 @@ bool ABlasterCharacter::IsAiming()
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Combat is: %d bAiming is: %d"), Combat, Combat->bAiming);
 	return (Combat && Combat->bAiming);
+}
+
+AWeapon* ABlasterCharacter::GetEquippedWeapon()
+{
+	if (Combat == nullptr) {
+		return nullptr;
+	}
+
+	return Combat->EquippedWeapon;
 }
 
 
