@@ -39,7 +39,7 @@ ABlasterCharacter::ABlasterCharacter()
 	GetCapsuleComponent() -> SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera,ECollisionResponse::ECR_Ignore);
 	GetMesh() -> SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera,ECollisionResponse::ECR_Ignore);
 
-
+	TurningInPlace = ETurningInPlace::ETIP_NotTurning;
 }
 
 void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -135,6 +135,7 @@ void ABlasterCharacter::EquipButtonPressed()
 	}
 }
 
+
 void ABlasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 {
 	if (OverlappingWeapon) {
@@ -204,13 +205,14 @@ void ABlasterCharacter::AimOffset(float DeltaTime)
 		FRotator DeltaAimRotaiton = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRotation, StratingAimRotation);
 		AO_Yaw = DeltaAimRotaiton.Yaw;
 		bUseControllerRotationYaw = false;
+		TurnInPlace(DeltaTime);
 
 	}
 	if (Speed > 0.f || bIsInAir) { //Running or Jumping
 		StratingAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
 		AO_Yaw = 0.f;
 		bUseControllerRotationYaw = true;
-
+		TurningInPlace = ETurningInPlace::ETIP_NotTurning;
 	}
 
 	AO_Pitch = GetBaseAimRotation().Pitch;
@@ -223,6 +225,17 @@ void ABlasterCharacter::AimOffset(float DeltaTime)
 	}
 
 
+}
+
+void ABlasterCharacter::TurnInPlace(float DeltaTime)
+{
+	if (AO_Yaw > 90.f) { // Turning Right
+		TurningInPlace = ETurningInPlace::ETIP_Right;
+	}
+	else if (AO_Yaw < -90.f) { //Turning Left
+		TurningInPlace = ETurningInPlace::ETIP_Left;
+
+	}
 }
 
 
