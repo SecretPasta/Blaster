@@ -202,16 +202,21 @@ void ABlasterCharacter::AimOffset(float DeltaTime)
 
 	if (Speed == 0.f && !bIsInAir) { //Standing still and not jumping
 		FRotator CurrentAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
-		FRotator DeltaAimRotaiton = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRotation, StratingAimRotation);
+		FRotator DeltaAimRotaiton = UKismetMathLibrary::NormalizedDeltaRotator(CurrentAimRotation, StartingAimRotation);
 		AO_Yaw = DeltaAimRotaiton.Yaw;
-		bUseControllerRotationYaw = false;
+		if (TurningInPlace == ETurningInPlace::ETIP_NotTurning) 
+		{
+			InterpAO_Yaw = AO_Yaw;
+		}
+		bUseControllerRotationYaw = true;
 		TurnInPlace(DeltaTime);
 
 	}
 	if (Speed > 0.f || bIsInAir) { //Running or Jumping
-		StratingAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		StartingAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
 		AO_Yaw = 0.f;
 		bUseControllerRotationYaw = true;
+		
 		TurningInPlace = ETurningInPlace::ETIP_NotTurning;
 	}
 
@@ -234,7 +239,14 @@ void ABlasterCharacter::TurnInPlace(float DeltaTime)
 	}
 	else if (AO_Yaw < -90.f) { //Turning Left
 		TurningInPlace = ETurningInPlace::ETIP_Left;
-
+	}
+	if (TurningInPlace != ETurningInPlace::ETIP_NotTurning) {
+		InterpAO_Yaw = FMath::FInterpTo(InterpAO_Yaw, 0, DeltaTime, 4.f);
+		AO_Yaw = InterpAO_Yaw;
+		if (FMath::Abs(AO_Yaw) < 15.f) {
+			TurningInPlace = ETurningInPlace::ETIP_NotTurning;
+			StartingAimRotation = FRotator(0.f, GetBaseAimRotation().Yaw, 0.f);
+		}
 	}
 }
 
