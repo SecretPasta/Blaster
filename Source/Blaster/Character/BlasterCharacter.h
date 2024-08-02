@@ -7,6 +7,7 @@
 #include "Blaster/BlasterTypes/TurningInPlace.h"
 #include "BlasterCharacter.generated.h"
 
+
 UCLASS()
 class BLASTER_API ABlasterCharacter : public ACharacter
 {
