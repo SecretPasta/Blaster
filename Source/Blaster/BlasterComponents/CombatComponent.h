@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Blaster/HUD/BlasterHUD.h"
 #include "CombatComponent.generated.h"
 
 #define TRACE_LENGTH 80000.f;
@@ -85,6 +86,8 @@ private:
 
 	FVector HitTarget;
 
+	FHUDPackage HUDPackage;
+
 	//UPROPERTY(EditAnywhere)
 	//float CrosshairAimSize = 0.58f;
 	/**
@@ -103,6 +106,8 @@ private:
 	float CurrentFOV;
 
 	void InterpFOV(float DeltaTime);
+
+
 
 public:	
 
