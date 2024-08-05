@@ -36,7 +36,7 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	if (Tracer) {
-		TracerComponent= UGameplayStatics::SpawnEmitterAttached(Tracer,CollisionBox,FName(),GetActorLocation(), GetActorRotation(), EAttachLocation::KeepWorldPosition);
+		TracerComponent = UGameplayStatics::SpawnEmitterAttached(Tracer,CollisionBox,FName(),GetActorLocation(), GetActorRotation(), EAttachLocation::KeepWorldPosition);
 	}
 	if (HasAuthority()) {
 		CollisionBox->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
@@ -44,7 +44,7 @@ void AProjectile::BeginPlay()
 }
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(OtherActor);
+	BlasterCharacter = Cast<ABlasterCharacter>(OtherActor);
 	if (BlasterCharacter) {
 		BlasterCharacter->MulticastHit();
 	}
@@ -59,11 +59,23 @@ void AProjectile::Tick(float DeltaTime)
 void AProjectile::Destroyed()
 {
 	Super::Destroyed();
-	if (ImpactParticles) {
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticles, GetActorTransform());
+	if (BlasterCharacter) {
+		if (PlayerImpactParticles) {
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), PlayerImpactParticles, GetActorTransform());
+		}
+		if (PlayerImpactSound) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), PlayerImpactSound, GetActorLocation());
+		}
 	}
-	if (ImpactSound) {
-		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
+	else {
+		if (ImpactParticles) {
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticles, GetActorTransform());
+		}
+		if (ImpactSound) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactSound, GetActorLocation());
+		}
 	}
+
+	
 }
 
