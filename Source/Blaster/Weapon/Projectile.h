@@ -42,14 +42,15 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	class UParticleSystem* PlayerImpactParticles;
+	
+	class UParticleSystem* ParticlesToPlay;
 
 	UPROPERTY(EditAnywhere)
 	class USoundCue* ImpactSound;
 
 	UPROPERTY(EditAnywhere)
 	class USoundCue* PlayerImpactSound;
-
-	class ABlasterCharacter* BlasterCharacter;
+	
 
 public:	
 

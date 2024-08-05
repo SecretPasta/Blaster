@@ -113,7 +113,6 @@ private:
 
 	float CaclulateSpeed();
 
-
 public:	
 	
 	void SetOverlappingWeapon(AWeapon* Weapon);
