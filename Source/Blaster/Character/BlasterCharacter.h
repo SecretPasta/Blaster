@@ -32,8 +32,10 @@ public:
 
 	virtual void OnRep_ReplicatedMovement() override;
 
-	UFUNCTION(NetMulticast, Reliable)
 	void Elim();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastElim();
 
 protected:
 	// Called when the game starts or when spawned
@@ -139,6 +141,12 @@ private:
 
 	bool bElimmed = false;
 
+	FTimerHandle ElimTimer;
+
+	UPROPERTY(EditDefaultsOnly)
+	float ElimDelay = 3.f;
+
+	void ElimTimerFinished();
 
 public:	
 	
@@ -162,3 +170,4 @@ public:
 
 	FORCEINLINE bool IsElimmed() const { return bElimmed; }
 };
+
