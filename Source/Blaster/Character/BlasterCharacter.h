@@ -70,6 +70,9 @@ protected:
 
 	void UpdateHUDHealth();
 
+	//Poll for any relevent classes and intiate the HUD
+	void PollInit();
+
 private:
 
 	UPROPERTY(VisibleAnywhere, Category =  Camera )
@@ -188,7 +191,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Elim")
 	class USoundCue* ElimBotSound;
 
-
+	class ABlasterPlayerState* BlasterPlayerState;
 
 public:	
 	
