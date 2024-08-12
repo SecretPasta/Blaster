@@ -37,6 +37,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	class UParticleSystem* Tracer;
 
+	UPROPERTY()
 	class UParticleSystemComponent* TracerComponent;
 
 	UPROPERTY(EditAnywhere)
@@ -45,6 +46,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	class UParticleSystem* PlayerImpactParticles;
 	
+	UPROPERTY()
 	class UParticleSystem* ParticlesToPlay;
 
 	UPROPERTY(EditAnywhere)
