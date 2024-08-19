@@ -24,7 +24,9 @@ void ABlasterGameMode::PlayerEliminated(ABlasterCharacter* ElimmedCharacter, ABl
 
 	if (ElimmedCharacter) {
 		ElimmedCharacter->Elim();
+
 	}
+
 
 }
 
