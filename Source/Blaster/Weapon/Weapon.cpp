@@ -96,7 +96,7 @@ void AWeapon::SetHUDAmmo()
 
 void AWeapon::SpendRound()
 {
-	--Ammo;
+	Ammo = FMath::Clamp(Ammo - 1 ,0, MagCapacity);
 	SetHUDAmmo();
 
 }
@@ -146,6 +146,8 @@ void AWeapon::SetWeaponState(EWeaponState State)
 
 }
 
+
+
 void AWeapon::OnRep_WeaponState()
 {
 	switch (WeaponState) {
@@ -162,8 +164,6 @@ void AWeapon::OnRep_WeaponState()
 		break;
 	}
 }
-
-
 
 void AWeapon::ShowPickupWidget(bool bShowWidget)
 {
@@ -202,3 +202,7 @@ void AWeapon::Dropped()
 	BlasterOwnerController = nullptr;
 }
 
+bool AWeapon::IsEmpty()
+{
+	return Ammo <= 0;
+}

@@ -24,8 +24,6 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-
-
 	void EquipWeapon(class AWeapon* WeaponToEquip);
 
 protected:
@@ -124,6 +122,8 @@ private:
 
 	void StartFireTimer();
 	void FireTimerFinished();
+
+	bool CanFire();
 
 public:	
 
