@@ -59,6 +59,7 @@ void ABlasterPlayerState::OnRep_Defeats()
 		Controller = Controller == nullptr ? Cast<ABlasterPlayerController>(Character->Controller) : Controller;
 		if (Controller) {
 			Controller->SetHUDDefeats(Defeats);
+			Controller->SetHUDWeaponType(EWeaponType::EWT_MAX); // Called on the Clients
 		}
 	}
 }

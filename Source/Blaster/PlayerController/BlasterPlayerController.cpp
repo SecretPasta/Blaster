@@ -7,6 +7,7 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Blaster/Character/BlasterCharacter.h"
+#include "Blaster/PlayerController/BlasterPlayerController.h"
 
 void ABlasterPlayerController::BeginPlay()
 {
@@ -24,6 +25,7 @@ void ABlasterPlayerController::OnPossess(APawn* InPawn)
 	ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(InPawn);
 	if (BlasterCharacter) {
 		SetHUDHealth(BlasterCharacter->GetHealth(), BlasterCharacter->GetMaxHealth());
+		SetHUDWeaponType(EWeaponType::EWT_MAX); //Reset Text on Server
 	}
 
 }
@@ -90,6 +92,28 @@ void ABlasterPlayerController::SetHUDCarriedAmmo(int32 Ammo)
 	{
 		FString AmmoText = FString::Printf(TEXT("%d"), Ammo);
 		BlasterHUD->CharacterOverlay->CarriedAmmoAmount->SetText(FText::FromString(AmmoText));
+	}
+}
+
+void ABlasterPlayerController::SetHUDWeaponType(EWeaponType WeaponType)
+{
+	BlasterHUD = BlasterHUD == nullptr ? Cast<ABlasterHUD>(GetHUD()) : BlasterHUD;
+
+	bool bHUDValid = BlasterHUD && BlasterHUD->CharacterOverlay && BlasterHUD->CharacterOverlay->WeaponType;
+	if (bHUDValid)
+	{
+		FString WeaponTypeText;
+		switch (WeaponType) {
+		case EWeaponType::EWT_AssaultRifle:
+			WeaponTypeText = FString::Printf(TEXT("Assualt Rifle"));
+			break;
+
+		case EWeaponType::EWT_MAX:
+			WeaponTypeText = FString::Printf(TEXT(""));
+			break;
+		}
+		
+		BlasterHUD->CharacterOverlay->WeaponType->SetText(FText::FromString(WeaponTypeText));
 	}
 }
 

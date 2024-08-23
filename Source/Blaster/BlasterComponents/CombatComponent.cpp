@@ -105,6 +105,10 @@ void UCombatComponent::FireTimerFinished()
 	{
 		Fire();
 	}
+	if (EquippedWeapon->IsEmpty()) {
+		Reload();
+	}
+
 }
 
 void UCombatComponent::ServerFire_Implementation(const FVector_NetQuantize& TraceHitTarget)
@@ -134,8 +138,9 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 	if (EquippedWeapon) {
 		EquippedWeapon->Dropped();
 	}
-
 	
+	
+
 	EquippedWeapon = WeaponToEquip;
 	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
 	const USkeletalMeshSocket* HandSocket = Character->GetMesh()->GetSocketByName(FName("RightHandSocket"));
@@ -153,12 +158,18 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 	Controller = Controller == nullptr ? Cast<ABlasterPlayerController>(Character->Controller) : Controller;
 	if (Controller) {
 		Controller->SetHUDCarriedAmmo(CarriedAmmo);
+		Controller->SetHUDWeaponType(EquippedWeapon->GetWeaponType());
 	}
 
 	if (EquippedWeapon->EquipSound) {
 		UGameplayStatics::PlaySoundAtLocation(this, EquippedWeapon->EquipSound, Character->GetActorLocation());
 	}
 
+	if (EquippedWeapon->IsEmpty()) {
+		Reload();
+	}
+
+	
 
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
 	Character->bUseControllerRotationYaw = true;
@@ -167,7 +178,7 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 
 void UCombatComponent::Reload()
 {
-	if (CarriedAmmo > 0 && CombatState != ECombatState::ECS_Reloading) {
+	if (CarriedAmmo > 0 && CombatState != ECombatState::ECS_Reloading && EquippedWeapon->GetAmmo() < EquippedWeapon->GetMagCapacity()) {
 		ServerReload();
 	}
 }
@@ -268,6 +279,10 @@ void UCombatComponent::OnRep_EquippedWeapon()
 		if (EquippedWeapon->EquipSound) {
 			UGameplayStatics::PlaySoundAtLocation(this, EquippedWeapon->EquipSound, Character->GetActorLocation());
 		}
+		if (Controller) {
+			Controller->SetHUDWeaponType(EquippedWeapon->GetWeaponType());
+		}
+
 	}
 
 }
