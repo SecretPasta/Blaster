@@ -29,16 +29,24 @@ public:
 
 	void SetHUDWeaponType(EWeaponType WeaponType);
 
+	void setHUDMatchCountdown(float CountdownTime);
 
 	virtual void OnPossess(APawn* InPawn) override;
 
+	virtual void Tick(float DeltaTime) override;
 protected:
 
 	virtual void BeginPlay() override;
+
+	void SetHUDTime();
 
 private:
 
 	UPROPERTY()
 	class ABlasterHUD* BlasterHUD;
 	
+	float MatchTime = 120.f;
+
+	uint32 CountdownInt = 0;
+
 };
