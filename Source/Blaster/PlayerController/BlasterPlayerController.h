@@ -31,6 +31,8 @@ public:
 
 	void SetHUDMatchCountdown(float CountdownTime);
 
+	void SetHUDAnnoucementCountDown(float CountdownTime);
+
 	virtual void OnPossess(APawn* InPawn) override;
 
 	virtual void Tick(float DeltaTime) override;
@@ -44,6 +46,7 @@ public:
 	void OnMatchStateSet(FName State);
 
 	void HandleMatchHasStarted();
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -74,12 +77,22 @@ protected:
 
 	void CheckTimeSync(float DeltaTime);
 
+	UFUNCTION(Server, Reliable)
+	void ServerCheckMatchState();
+
+	UFUNCTION(Client, Reliable)
+	void ClientJoinMidGame(FName StateOfMatch, float Warmup, float Match, float StartingTime);
+
 private:
 
 	UPROPERTY()
 	class ABlasterHUD* BlasterHUD;
 	
-	float MatchTime = 120.f;
+	float MatchTime = 0.f;
+
+	float WarmupTime = 0.f;
+
+	float LevelStartingTime = 0.f;
 
 	uint32 CountdownInt = 0;
 
