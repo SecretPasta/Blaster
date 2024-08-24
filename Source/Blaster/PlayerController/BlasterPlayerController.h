@@ -29,7 +29,7 @@ public:
 
 	void SetHUDWeaponType(EWeaponType WeaponType);
 
-	void setHUDMatchCountdown(float CountdownTime);
+	void SetHUDMatchCountdown(float CountdownTime);
 
 	virtual void OnPossess(APawn* InPawn) override;
 
