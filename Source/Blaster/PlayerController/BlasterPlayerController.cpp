@@ -21,7 +21,19 @@ void ABlasterPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	SetHUDTime();
+	CheckTimeSync(DeltaTime);
 
+}
+
+void ABlasterPlayerController::CheckTimeSync(float DeltaTime)
+{
+	TimeSyncRunningTime += DeltaTime;
+	if (IsLocalController()) {
+		if (TimeSyncRunningTime > TimeSyncFrequency) {
+			ServerRequestServerTime(GetWorld()->GetTimeSeconds());
+			TimeSyncRunningTime = 0.f;
+		}
+	}
 }
 
 //Called when the pawn is possessed i.e. when respawning
@@ -145,11 +157,43 @@ void ABlasterPlayerController::setHUDMatchCountdown(float CountdownTime)
 
 void ABlasterPlayerController::SetHUDTime()
 {
-	uint32 SecondsLeft = FMath::CeilToInt(MatchTime - GetWorld()->GetTimeSeconds());
+	uint32 SecondsLeft = FMath::CeilToInt(MatchTime - GetServerTime());
 	if (CountdownInt != SecondsLeft) {
-		setHUDMatchCountdown(MatchTime - GetWorld()->GetTimeSeconds());
+		setHUDMatchCountdown(MatchTime - GetServerTime());
 	}
 
 	CountdownInt = SecondsLeft;
 }
 
+
+
+void ABlasterPlayerController::ServerRequestServerTime_Implementation(float TimeOfClientRequest)
+{
+	float ServerTimeOfReceipt = GetWorld()->GetTimeSeconds();
+	ClientReportServerTime(TimeOfClientRequest, ServerTimeOfReceipt);
+}
+
+void ABlasterPlayerController::ClientReportServerTime_Implementation(float TimeClientRequest, float TimeServerReceivedClientRequest)
+{
+	float RoundTripTime = GetWorld()->GetTimeSeconds() - TimeClientRequest;
+	float CurrentServerTime = TimeServerReceivedClientRequest + (0.5f * RoundTripTime);
+	ClientServerDelta = CurrentServerTime - GetWorld()->GetTimeSeconds();
+}
+
+float ABlasterPlayerController::GetServerTime()
+{
+	if (HasAuthority()) {
+		return GetWorld()->GetTimeSeconds();
+	}
+	else {
+		return GetWorld()->GetTimeSeconds() + ClientServerDelta;
+	}
+}
+
+void ABlasterPlayerController::ReceivedPlayer()
+{
+	Super::ReceivedPlayer();
+	if (IsLocalController()) {
+		ServerRequestServerTime(GetWorld()->GetTimeSeconds());
+	}
+}
