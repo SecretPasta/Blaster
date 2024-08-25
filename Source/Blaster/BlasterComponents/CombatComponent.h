@@ -33,6 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FinishReloading();
 
+	void FireButtonPressed(bool bPressed);
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -44,8 +46,6 @@ protected:
 
 	UFUNCTION()
 	void OnRep_EquippedWeapon();
-
-	void FireButtonPressed(bool bPressed);
 
 	void Fire();
 

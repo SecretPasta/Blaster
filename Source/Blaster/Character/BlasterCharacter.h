@@ -43,6 +43,9 @@ public:
 
 	virtual void Destroyed() override;
 
+	UPROPERTY(Replicated)
+	bool bDisableGameplay = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -77,6 +80,7 @@ protected:
 	//Poll for any relevent classes and intiate the HUD
 	void PollInit();
 
+	void RotateInPlace(float DeltaTime);
 private:
 
 	UPROPERTY(VisibleAnywhere, Category =  Camera )
@@ -234,5 +238,8 @@ public:
 	
 	ECombatState GetCombatState() const;
 
+	FORCEINLINE UCombatComponent* GetCombat() const { return Combat; }
+
+	FORCEINLINE bool GetDisableGameplay() const { return bDisableGameplay; }
 };
 
