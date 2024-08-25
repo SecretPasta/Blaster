@@ -93,6 +93,9 @@ void ABlasterCharacter::MulticastElim_Implementation()
 	if (BlasterPlayerController) {
 		BlasterPlayerController->SetHUDWeaponAmmo(0);
 	}
+	if (Combat) {
+		Combat->FireButtonPressed(false);
+	}
 	bElimmed = true;
 	PlayElimMontage();
 	// Start Dissolve Effect
@@ -142,7 +145,11 @@ void ABlasterCharacter::Destroyed()
 	if (ElimBotComponent) {
 		ElimBotComponent->DestroyComponent();
 	}
-	if (Combat && Combat->EquippedWeapon) {
+
+	ABlasterGameMode* BlasterGameMode = Cast<ABlasterGameMode>(UGameplayStatics::GetGameMode(this));
+
+	bool bMatchNotInProgress = BlasterGameMode && BlasterGameMode->GetMatchState() != MatchState::InProgress;
+	if (Combat && Combat->EquippedWeapon && bMatchNotInProgress) {
 		Combat->EquippedWeapon->Destroy();
 	}
 }
