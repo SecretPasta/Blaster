@@ -17,6 +17,9 @@ public:
 
 	virtual void Destroyed() override;
 
+	UPROPERTY(EditAnywhere)
+	class UBoxComponent* CollisionBox;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -26,10 +29,24 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float Damage = 20.f;
 
-private:
+
 
 	UPROPERTY(EditAnywhere)
-	class UBoxComponent* CollisionBox;
+	class UParticleSystem* ImpactParticles;
+
+	UPROPERTY(EditAnywhere)
+	class UParticleSystem* PlayerImpactParticles;
+
+	UPROPERTY()
+	class UParticleSystem* ParticlesToPlay;
+
+	UPROPERTY(EditAnywhere)
+	class USoundCue* ImpactSound;
+
+	UPROPERTY(EditAnywhere)
+	class USoundCue* PlayerImpactSound;
+
+private:
 
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
@@ -39,23 +56,6 @@ private:
 
 	UPROPERTY()
 	class UParticleSystemComponent* TracerComponent;
-
-	UPROPERTY(EditAnywhere)
-	class UParticleSystem* ImpactParticles;
-
-	UPROPERTY(EditAnywhere)
-	class UParticleSystem* PlayerImpactParticles;
-	
-	UPROPERTY()
-	class UParticleSystem* ParticlesToPlay;
-
-	UPROPERTY(EditAnywhere)
-	class USoundCue* ImpactSound;
-
-	UPROPERTY(EditAnywhere)
-	class USoundCue* PlayerImpactSound;
-	
-
 
 public:	
 
