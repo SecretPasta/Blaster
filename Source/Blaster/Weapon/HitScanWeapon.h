@@ -29,4 +29,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float Damage = 7.f;
+	
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	UParticleSystem* BeamParticles;
 };
