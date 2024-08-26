@@ -63,10 +63,10 @@ public:
 	/**
 	* Zoomed FOV while aiming
 	**/
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	float ZoomedFOV = 30.f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	float ZoomInterpSpeed = 20.f;
 
 	/**
@@ -124,10 +124,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	class UAnimationAsset* FireAnimation;
 
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class ACasing> CasingClass;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Ammo ,EditAnywhere, Category = "Weapon Properties")
+	UPROPERTY(ReplicatedUsing = OnRep_Ammo ,EditAnywhere, Category = "Combat")
 	int32 Ammo;
 
 	UFUNCTION()
@@ -135,7 +135,7 @@ private:
 
 	void SpendRound();
 
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	int32 MagCapacity;
 
 	UPROPERTY()
@@ -144,7 +144,7 @@ private:
 	UPROPERTY()
 	class ABlasterPlayerController* BlasterOwnerController;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Combat")
 	EWeaponType WeaponType;
 
 public:	
