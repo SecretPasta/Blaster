@@ -46,10 +46,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	class USoundCue* PlayerImpactSound;
 
-private:
-
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
+private:
 
 	UPROPERTY(EditAnywhere)
 	class UParticleSystem* Tracer;
