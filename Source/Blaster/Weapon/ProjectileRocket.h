@@ -39,4 +39,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float DamageFalloff = 1.f;
+
+
+
 };
