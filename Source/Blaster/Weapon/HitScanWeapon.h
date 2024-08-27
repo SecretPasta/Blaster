@@ -32,4 +32,13 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	UParticleSystem* BeamParticles;
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	UParticleSystem* MuzzleFlash;
+	
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	USoundCue* FireSound;
+	
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	USoundCue* ImpactSound;
 };
