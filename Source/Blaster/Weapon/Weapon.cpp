@@ -147,11 +147,8 @@ void AWeapon::SetWeaponState(EWeaponState State)
 		WeaponMesh->SetEnableGravity(true);
 		WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 		WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-
 		break;
 	}
-
-
 
 }
 
