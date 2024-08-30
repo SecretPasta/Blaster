@@ -197,6 +197,9 @@ void ABlasterPlayerController::SetHUDWeaponType(EWeaponType WeaponType)
 		case EWeaponType::EWT_Shotgun:
 			WeaponTypeText = FString::Printf(TEXT("Shotgun"));
 			break;
+		case EWeaponType::EWT_SniperRifle:
+			WeaponTypeText = FString::Printf(TEXT("Sniper Rifle"));
+			break;
 
 		case EWeaponType::EWT_MAX:
 			WeaponTypeText = FString::Printf(TEXT(""));
