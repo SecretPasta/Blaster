@@ -34,6 +34,8 @@ public:
 
 	void PlayElimMontage();
 
+	void PlayThrowGrenadeMontage();
+
 	virtual void OnRep_ReplicatedMovement() override;
 
 	void Elim();
@@ -64,6 +66,8 @@ protected:
 	void AimButtonReleased ();
 	void FireButtonPressed();
 	void FireButtonReleased();
+	void GrenadeButtonPressed();
+
 
 	void AimOffset(float DeltaTime);
 
@@ -131,6 +135,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	UAnimMontage* ElimMontage;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+	UAnimMontage* ThrowGrenadeMontage;
 
 
 	void HideCameraIfCharacterClose();
