@@ -239,7 +239,7 @@ void UCombatComponent::ReloadEmptyWeapon()
 
 void UCombatComponent::Reload()
 {
-	if (CarriedAmmo > 0 && CombatState == ECombatState::ECS_Unoccupied && EquippedWeapon->GetAmmo() < EquippedWeapon->GetMagCapacity()) {
+	if (CarriedAmmo > 0 && CombatState == ECombatState::ECS_Unoccupied && EquippedWeapon && !EquippedWeapon->IsFull()) {
 		ServerReload();
 	}
 }
@@ -301,7 +301,6 @@ void UCombatComponent::UpdateShotgunAmmoValues()
 		Controller->SetHUDCarriedAmmo(CarriedAmmo);
 	}
 	EquippedWeapon->AddAmmo(-1);
-	UE_LOG(LogTemp, Warning, TEXT("Added 1 Ammo!"));
 	bCanFire = true;
 	if (EquippedWeapon->IsFull() || CarriedAmmo == 0)
 	{
