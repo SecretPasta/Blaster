@@ -41,6 +41,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ThrowGrenadeFinished();
 
+	UFUNCTION(BlueprintCallable)
+	void LaunchGrenade();
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -87,6 +90,8 @@ protected:
 	void PlayEquipWeaponSound();
 
 	void ReloadEmptyWeapon();
+
+	void ShowAttachedGreande(bool bShowGrenade);
 
 private:
 
