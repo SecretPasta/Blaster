@@ -22,10 +22,10 @@ void AHealthPickup::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	Super::OnSphereOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 	ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(OtherActor);
 	if (BlasterCharacter) {
-		//UBuffComponent* Buff = BlasterCharacter->GetBuff();
-		//if (Buff) {
-		//	//Combat->PickUpAmmo(WeaponType, AmmoAmount);
-		//}
+		UBuffComponent* Buff = BlasterCharacter->GetBuff();
+		if (Buff) {
+			Buff->Heal(HealAmount, HealingTime);
+		}
 	}
 	Destroy();
 }
@@ -36,6 +36,5 @@ void AHealthPickup::Destroyed()
 	if(PickupEffect) {
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, PickupEffect, GetActorLocation(), GetActorRotation());
 	}
-	Super::Destroy();
-
+	Super::Destroyed();
 }
