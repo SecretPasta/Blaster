@@ -88,6 +88,7 @@ void ABlasterPlayerController::OnPossess(APawn* InPawn)
 	ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(InPawn);
 	if (BlasterCharacter) {
 		SetHUDHealth(BlasterCharacter->GetHealth(), BlasterCharacter->GetMaxHealth());
+		SetHUDShield(BlasterCharacter->GetShield(), BlasterCharacter->GetMaxShield());
 		SetHUDWeaponType(EWeaponType::EWT_MAX); //Reset Text on Server
 	}
 
@@ -106,7 +107,7 @@ void ABlasterPlayerController::SetHUDHealth(float Health, float MaxHealth)
 		BlasterHUD->CharacterOverlay->HealthText->SetText(FText::FromString(HealthText));
 	}
 	else {//Caching values till overlay is valid
-		bInitializeCharacterOverlay = true;
+		bInitializeHealth = true;
 		HUDHealth = Health;
 		HUDMaxHealth = MaxHealth;
 	}
@@ -126,7 +127,7 @@ void ABlasterPlayerController::SetHUDShield(float Shield, float MaxShield)
 		BlasterHUD->CharacterOverlay->ShieldText->SetText(FText::FromString(ShieldText));
 	}
 	else {//Caching values till overlay is valid
-		bInitializeCharacterOverlay = true;
+		bInitializeShield = true;
 		HUDShield = Shield;
 		HUDMaxShield = MaxShield;
 	}
@@ -144,7 +145,7 @@ void ABlasterPlayerController::SetHUDScore(float Score)
 		BlasterHUD->CharacterOverlay->ScoreAmount->SetText(FText::FromString(ScoreText));
 	}
 	else {//Caching values till overlay is valid
-		bInitializeCharacterOverlay = true;
+		bInitializeScore = true;
 		HUDScode = Score;
 	}
 }
@@ -160,7 +161,7 @@ void ABlasterPlayerController::SetHUDDefeats(int32 Defeats)
 		BlasterHUD->CharacterOverlay->DefeatsAmount->SetText(FText::FromString(DefeatsText));
 	}
 	else { //Caching values till overlay is valid
-		bInitializeCharacterOverlay = true;
+		bInitializeDefeats = true;
 		HUDDefeats = Defeats;
 	}
 }
@@ -287,6 +288,7 @@ void ABlasterPlayerController::SetHUDGrenades(int32 Grenades)
 		BlasterHUD->CharacterOverlay->GrenadesText->SetText(FText::FromString(GrenadesText));
 	}
 	else {
+		bInitializeGrenades = true;
 		HUDGrenades = Grenades;
 	}
 }
@@ -326,21 +328,24 @@ void ABlasterPlayerController::SetHUDTime()
 
 void ABlasterPlayerController::PollInit()
 {
-	if (CharacterOverlay == nullptr) {
-		if (BlasterHUD && BlasterHUD->CharacterOverlay) {
-			CharacterOverlay = BlasterHUD->CharacterOverlay;
-			if (CharacterOverlay) { //Using Cached values
-				SetHUDHealth(HUDHealth, HUDMaxHealth);
-				SetHUDShield(HUDShield, HUDMaxShield);
-				SetHUDScore(HUDScode);
-				SetHUDDefeats(HUDDefeats);
+	if (CharacterOverlay != nullptr) {
+		return;
+	}
 
-				ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(GetPawn());
-				if(BlasterCharacter && BlasterCharacter->GetCombat())
-				SetHUDGrenades(BlasterCharacter->GetCombat()->GetGreandes());
-			}
+	if (BlasterHUD && BlasterHUD->CharacterOverlay) {
+		CharacterOverlay = BlasterHUD->CharacterOverlay;
+		if (CharacterOverlay) { //Using Cached values
+			if (bInitializeHealth) SetHUDHealth(HUDHealth, HUDMaxHealth);
+			if (bInitializeShield) SetHUDShield(HUDShield, HUDMaxShield);
+			if (bInitializeScore) SetHUDScore(HUDScode);
+			if (bInitializeDefeats) SetHUDDefeats(HUDDefeats);
+
+			ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(GetPawn());
+			if (BlasterCharacter && BlasterCharacter->GetCombat())
+			SetHUDGrenades(BlasterCharacter->GetCombat()->GetGreandes());
 		}
 	}
+
 }
 
 
