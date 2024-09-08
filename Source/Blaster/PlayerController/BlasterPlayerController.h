@@ -19,6 +19,8 @@ public:
 
 	void SetHUDHealth(float Health, float MaxHealth);
 
+	void SetHUDShield(float Shield, float MaxShield);
+
 	void SetHUDScore(float Score);
 
 	void SetHUDDefeats(int32 Defeats);
@@ -117,8 +119,11 @@ private:
 	bool bInitializeCharacterOverlay = false;
 
 	float HUDHealth;
-	float HUDMaxHealth;
+	float HUDMaxShield;
 	float HUDScode;
 	int32 HUDDefeats;
 	int32 HUDGrenades;
+
+	float HUDMaxHealth;
+	float HUDShield;
 };
