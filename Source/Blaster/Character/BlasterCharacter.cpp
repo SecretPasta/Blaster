@@ -237,6 +237,7 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAction(TEXT("Equip"), IE_Pressed, this, &ABlasterCharacter::EquipButtonPressed);
 	PlayerInputComponent->BindAction(TEXT("Crouch"), IE_Pressed, this, &ABlasterCharacter::CrouchButtonPressed);
+	PlayerInputComponent->BindAction(TEXT("SwitchWeapon"), IE_Pressed, this, &ABlasterCharacter::SwitchWeaponButtonPressed);
 
 	PlayerInputComponent->BindAction(TEXT("Aim"), IE_Pressed, this, &ABlasterCharacter::AimButtonPressed);
 	PlayerInputComponent->BindAction(TEXT("Aim"), IE_Released, this, &ABlasterCharacter::AimButtonReleased);
@@ -430,7 +431,6 @@ void ABlasterCharacter::EquipButtonPressed()
 	}
 	if (Combat) {
 		ServerEquipButtonPressed();
-
 	}
 }
 
@@ -577,6 +577,20 @@ void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 		LastWeapon->ShowPickupWidget(false);
 	}
 
+}
+
+void ABlasterCharacter::SwitchWeaponButtonPressed()
+{
+	if (Combat) {
+		ServerSwitchButtonButtonPressed();
+	}
+}
+
+void ABlasterCharacter::ServerSwitchButtonButtonPressed_Implementation()
+{
+	if (Combat) {
+		Combat->SwapWeapons();
+	}
 }
 
 void ABlasterCharacter::CrouchButtonPressed()

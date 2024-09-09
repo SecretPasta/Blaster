@@ -177,6 +177,28 @@ void UCombatComponent::EquipWeapon(AWeapon* WeaponToEquip)
 
 }
 
+void UCombatComponent::SwapWeapons()
+{
+	if (!ShouldSwapWeapons()) {
+		return;
+	}
+	AWeapon* TempWeapon = EquippedWeapon;
+
+	EquippedWeapon = SecondaryWeapon;
+	SecondaryWeapon = TempWeapon;
+
+	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	AttachActorToRightHand(EquippedWeapon);
+	EquippedWeapon->SetHUDAmmo();
+	UpdateCarriedAmmo();
+	PlayEquipWeaponSound(EquippedWeapon);
+	ReloadEmptyWeapon();
+
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
+	AttachActorToBackpack(SecondaryWeapon);
+
+}
+
 void UCombatComponent::EquipPrimaryWeapon(AWeapon* WeaponToEquip)
 {
 	if (WeaponToEquip == nullptr) {
@@ -190,10 +212,11 @@ void UCombatComponent::EquipPrimaryWeapon(AWeapon* WeaponToEquip)
 	AttachActorToRightHand(EquippedWeapon);
 	EquippedWeapon->SetOwner(Character);
 	EquippedWeapon->SetHUDAmmo();
+	
 
 	UpdateCarriedAmmo();
 
-	PlayEquipWeaponSound(WeaponToEquip);
+	PlayEquipWeaponSound(EquippedWeapon);
 
 	ReloadEmptyWeapon();
 }
@@ -204,10 +227,10 @@ void UCombatComponent::EquipSecondaryWeapon(AWeapon* WeaponToEquip)
 		return;
 	}
 	SecondaryWeapon = WeaponToEquip;
-	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
 	SecondaryWeapon->SetOwner(Character);
-	PlayEquipWeaponSound(WeaponToEquip);
-	AttachActorToBackpack(WeaponToEquip);
+	PlayEquipWeaponSound(SecondaryWeapon);
+	AttachActorToBackpack(SecondaryWeapon);
 }
 
 
@@ -518,6 +541,7 @@ void UCombatComponent::OnRep_EquippedWeapon()
 		if (Controller) {
 			Controller->SetHUDWeaponType(EquippedWeapon->GetWeaponType());
 		}
+		EquippedWeapon->SetHUDAmmo();
 	}
 }
 
@@ -525,7 +549,7 @@ void UCombatComponent::OnRep_SecondaryWeapon()
 {
 	if (SecondaryWeapon && Character)
 	{
-		SecondaryWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+		SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
 		AttachActorToBackpack(SecondaryWeapon);
 		PlayEquipWeaponSound(SecondaryWeapon);
 	/*	if (Controller) {
