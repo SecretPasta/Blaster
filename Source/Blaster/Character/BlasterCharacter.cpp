@@ -53,10 +53,10 @@ ABlasterCharacter::ABlasterCharacter()
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 
-	GetCapsuleComponent() -> SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera,ECollisionResponse::ECR_Ignore);
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionObjectType(ECC_SkeletalMesh);
-	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera,ECollisionResponse::ECR_Ignore);
-	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility,ECollisionResponse::ECR_Block);
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 0.f, 850.f);
 
 	TurningInPlace = ETurningInPlace::ETIP_NotTurning;
@@ -74,7 +74,7 @@ ABlasterCharacter::ABlasterCharacter()
 void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	
+
 	DOREPLIFETIME_CONDITION(ABlasterCharacter, OverlappingWeapon, COND_OwnerOnly);
 	DOREPLIFETIME(ABlasterCharacter, Health);
 	DOREPLIFETIME(ABlasterCharacter, Shield);
@@ -85,20 +85,13 @@ void ABlasterCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 void ABlasterCharacter::OnRep_ReplicatedMovement()
 {
 	Super::OnRep_ReplicatedMovement();
-	SimProxiesTurn(); 
+	SimProxiesTurn();
 	TimeSinceLastMovementReplication = 0.f;
 }
 
 void ABlasterCharacter::Elim()
 {
-	if (Combat && Combat->EquippedWeapon) {
-		if (Combat->EquippedWeapon->bDestroyWeapon) {
-			Combat->EquippedWeapon->Destroy();
-		}
-		else {
-			Combat->EquippedWeapon->Dropped();
-		}
-	}
+	DropOrDestoryWeapons();
 	MulticastElim();
 	GetWorldTimerManager().SetTimer(ElimTimer, this, &ABlasterCharacter::ElimTimerFinished, ElimDelay);
 }
@@ -160,6 +153,32 @@ void ABlasterCharacter::ElimTimerFinished()
 		BlasterGameMode->RequestRespawn(this, Controller);
 	}
 }
+
+void ABlasterCharacter::DropOrDestoryWeapon(AWeapon* Weapon)
+{
+	if (Weapon == nullptr) {
+		return;
+	}
+	if (Weapon->bDestroyWeapon) {
+		Weapon->Destroy();
+	}
+	else {
+		Weapon->Dropped();
+	}
+}
+
+void ABlasterCharacter::DropOrDestoryWeapons()
+{
+	if (Combat) {
+		if (Combat->EquippedWeapon) {
+			DropOrDestoryWeapon(Combat->EquippedWeapon);
+		}
+		if (Combat->SecondaryWeapon) {
+			DropOrDestoryWeapon(Combat->SecondaryWeapon);
+		}
+	}
+}
+
 
 void ABlasterCharacter::Destroyed()
 {

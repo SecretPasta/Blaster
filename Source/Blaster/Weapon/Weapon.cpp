@@ -213,6 +213,7 @@ void AWeapon::OnDropped()
 	WeaponMesh->SetEnableGravity(true);
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+	WeaponMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_PURPLE);
 	EnableCustomDepth(true);
 }
 

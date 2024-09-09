@@ -79,6 +79,8 @@ protected:
 	void FireButtonReleased();
 	void GrenadeButtonPressed();
 
+	void DropOrDestoryWeapon(AWeapon* Weapon);
+	void DropOrDestoryWeapons();
 
 	void AimOffset(float DeltaTime);
 
