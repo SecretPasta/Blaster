@@ -50,6 +50,13 @@ private:
 	UPROPERTY(EditAnywhere)
 	class UNiagaraSystem* PickupEffect;
 
+
+	//**
+	// Handles when player overlaps with pickup at spawn time*//
+	FTimerHandle BindOverlapTimer;
+	float BindOverlapTime = 0.25f;
+	void BindOverlapTimerFinished();
+
 public:	
 	
 
