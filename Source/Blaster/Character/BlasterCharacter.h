@@ -55,6 +55,11 @@ public:
 
 	void UpdateHUDShield();
 
+	void UpdateHUDAmmo();
+
+	void UpdateHUDWeaponType();
+
+	void SpawnDefaultWeapon();
 
 protected:
 	// Called when the game starts or when spawned
@@ -92,6 +97,7 @@ protected:
 	void PollInit();
 
 	void RotateInPlace(float DeltaTime);
+
 private:
 
 	UPROPERTY(VisibleAnywhere, Category =  Camera )
@@ -246,6 +252,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* AttachedGrenade;
+
+	//**
+	// Default Weapon*//
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+	TSubclassOf<AWeapon> DefaultWeaponClass;
 
 public:	
 	

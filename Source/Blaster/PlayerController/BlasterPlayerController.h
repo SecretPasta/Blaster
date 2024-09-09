@@ -138,4 +138,12 @@ private:
 
 	float HUDMaxHealth;
 
+	float HUDCarriedAmmo;
+	bool bInitializeCarriedAmmo = false;
+
+	float HUDWeaponAmmo;
+	bool bInitializeWeaponAmmo = false;
+
+	EWeaponType HUDWeaponType;
+	bool bInitializeWeaponType = false;
 };

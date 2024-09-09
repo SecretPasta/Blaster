@@ -15,6 +15,7 @@
 #include "Blaster/BlasterComponents/CombatComponent.h"
 #include "Blaster/GameState/BlasterGameState.h"
 #include "Blaster/PlayerState/BlasterPlayerState.h"
+#include "Blaster/Weapon/Weapon.h"
 
 
 void ABlasterPlayerController::BeginPlay()
@@ -89,7 +90,9 @@ void ABlasterPlayerController::OnPossess(APawn* InPawn)
 	if (BlasterCharacter) {
 		SetHUDHealth(BlasterCharacter->GetHealth(), BlasterCharacter->GetMaxHealth());
 		SetHUDShield(BlasterCharacter->GetShield(), BlasterCharacter->GetMaxShield());
-		SetHUDWeaponType(EWeaponType::EWT_MAX); //Reset Text on Server
+		if (BlasterCharacter->GetEquippedWeapon()) {
+			SetHUDWeaponType(BlasterCharacter->GetEquippedWeapon()->GetWeaponType());
+	}
 	}
 
 }
@@ -176,6 +179,10 @@ void ABlasterPlayerController::SetHUDWeaponAmmo(int32 Ammo)
 		FString AmmoText = FString::Printf(TEXT("%d"), Ammo);
 		BlasterHUD->CharacterOverlay->WeaponAmmoAmount->SetText(FText::FromString(AmmoText));
 	}
+	else {
+		bInitializeWeaponAmmo = true;
+		HUDWeaponAmmo = Ammo;
+	}
 }
 
 void ABlasterPlayerController::SetHUDCarriedAmmo(int32 Ammo)
@@ -187,6 +194,11 @@ void ABlasterPlayerController::SetHUDCarriedAmmo(int32 Ammo)
 	{
 		FString AmmoText = FString::Printf(TEXT("%d"), Ammo);
 		BlasterHUD->CharacterOverlay->CarriedAmmoAmount->SetText(FText::FromString(AmmoText));
+	}
+	else {
+		bInitializeCarriedAmmo = true;
+		HUDCarriedAmmo = Ammo;
+
 	}
 }
 
@@ -235,6 +247,10 @@ void ABlasterPlayerController::SetHUDWeaponType(EWeaponType WeaponType)
 		}
 		
 		BlasterHUD->CharacterOverlay->WeaponType->SetText(FText::FromString(WeaponTypeText));
+	}
+	else {
+		bInitializeWeaponType = true;
+		HUDWeaponType = WeaponType;
 	}
 }
 
@@ -339,6 +355,9 @@ void ABlasterPlayerController::PollInit()
 			if (bInitializeShield) SetHUDShield(HUDShield, HUDMaxShield);
 			if (bInitializeScore) SetHUDScore(HUDScode);
 			if (bInitializeDefeats) SetHUDDefeats(HUDDefeats);
+			if (bInitializeCarriedAmmo) SetHUDCarriedAmmo(HUDCarriedAmmo);
+			if (bInitializeWeaponAmmo) SetHUDWeaponAmmo(HUDWeaponAmmo);
+			if (bInitializeWeaponType) SetHUDWeaponType(HUDWeaponType);
 
 			ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(GetPawn());
 			if (BlasterCharacter && BlasterCharacter->GetCombat())
