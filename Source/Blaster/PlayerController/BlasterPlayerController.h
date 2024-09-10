@@ -89,6 +89,11 @@ protected:
 	UFUNCTION(Client, Reliable)
 	void ClientJoinMidGame(FName StateOfMatch, float Warmup, float Match, float Cooldown, float StartingTime);
 
+	void HighPingWarning();
+
+	void StopHighPingWarning();
+
+	void CheckPing(float DeltaTime);
 private:
 
 	UPROPERTY()
@@ -146,4 +151,17 @@ private:
 
 	EWeaponType HUDWeaponType;
 	bool bInitializeWeaponType = false;
+
+	float HighPingRunningTime = 0.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ping")
+	float HighPingDuration = 5.f;
+
+	float PingAnimationRunningTime = 0.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ping")
+	float CheckPingFrequency = 20.f;
+
+	UPROPERTY(EditAnywhere, Category = "Ping")
+	float HighPingThreshold = 50.f;
 };
