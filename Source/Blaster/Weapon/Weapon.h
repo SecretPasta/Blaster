@@ -19,6 +19,16 @@ enum class EWeaponState : uint8
 };
 
 
+UENUM(BlueprintType)
+enum class EFireType : uint8
+{
+	EFT_HitScan UMETA(DisplayName = "Hit Scan Weapon"),
+	EFT_Projectile UMETA(DisplayName = "Projectile Weapon"),
+	EFT_Shotgun UMETA(DisplayName = "Shotgun Weapon"),
+	EFT_MAX UMETA(DisplayName = "DefaultMAX")
+
+};
+
 UCLASS()
 class BLASTER_API AWeapon : public AActor
 {
@@ -88,6 +98,23 @@ public:
 	void EnableCustomDepth(bool bEnable);
 
 	bool bDestroyWeapon = false;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	EFireType FireType;
+
+	//**
+// Trace end with scatter*//
+
+	UPROPERTY(EditAnywhere, Category = "Weapon Scatter")
+	float DistanceToSphere = 800.f;
+
+	UPROPERTY(EditAnywhere, Category = "Weapon Scatter")
+	float SphereRadius = 75.f;
+
+	UPROPERTY(EditAnywhere, Category = "Weapon Scatter")
+	bool bUseScatter = false;
+
+	FVector TraceEndWithScatter(const FVector& HitTarget);
 protected:
 
 	virtual void BeginPlay() override;
