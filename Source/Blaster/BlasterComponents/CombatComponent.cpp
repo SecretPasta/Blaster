@@ -305,6 +305,13 @@ void UCombatComponent::EquipSecondaryWeapon(AWeapon* WeaponToEquip)
 	AttachActorToBackpack(SecondaryWeapon);
 }
 
+void UCombatComponent::OnRep_Aiming()
+{
+	if (Character && Character->IsLocallyControlled()) {
+		bAiming = bAimButtonPressed;
+	}
+}
+
 
 void UCombatComponent::DropEquippedWeapon()
 {
@@ -776,6 +783,7 @@ void UCombatComponent::SetAiming(bool bIsAiming)
 	if (Character->IsLocallyControlled() && EquippedWeapon->GetWeaponType() == EWeaponType::EWT_SniperRifle) {
 		Character->ShowSniperScopeWidget(bIsAiming);
 	}
+	if(Character->IsLocallyControlled()) bAimButtonPressed = bAiming;
 }
 
 void UCombatComponent::ServerSetAiming_Implementation(bool bIsAiming)
