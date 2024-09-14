@@ -143,6 +143,18 @@ protected:
 		int32 OtherBodyIndex
 	);
 
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float Damage = 7.f;
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	bool bUseServerSideRewind = false;
+
+	UPROPERTY()
+	class ABlasterCharacter* BlasterOwnerCharacter;
+
+	UPROPERTY()
+	class ABlasterPlayerController* BlasterOwnerController;
+
 private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
@@ -184,12 +196,6 @@ private:
 	// Incremented in SpendRound, decremented ClientUpdateAmmo
 	int32 Sequence = 0;
 
-	UPROPERTY()
-	class ABlasterCharacter* BlasterOwnerCharacter;
-
-	UPROPERTY()
-	class ABlasterPlayerController* BlasterOwnerController;
-
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	EWeaponType WeaponType;
 
@@ -209,5 +215,7 @@ public:
 
 	FORCEINLINE int32 GetAmmo() const { return Ammo; }
 	FORCEINLINE int32 GetMagCapacity() const { return MagCapacity; }
+
+	FORCEINLINE float GetDamage() const { return Damage; }
 
 };

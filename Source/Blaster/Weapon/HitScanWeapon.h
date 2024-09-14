@@ -31,9 +31,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	class UParticleSystem* ImpactParticles;
 
-	UPROPERTY(EditAnywhere, Category = "Damage")
-	float Damage = 7.f;
-
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
