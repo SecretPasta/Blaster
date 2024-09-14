@@ -101,6 +101,64 @@ protected:
 
 	void RotateInPlace(float DeltaTime);
 
+	//**
+	// Hit Boxes used for Server Side Rewind
+	//
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	class UBoxComponent* head;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* pelvis;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* spine_02;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* spine_03;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* uppperarm_l;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* uppperarm_r;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* lowerarm_l;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* lowerarm_r;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* hand_l;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* hand_r;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* backpack;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* blanket;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* thigh_l;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* thigh_r;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* calf_l;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* calf_r;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* foot_l;
+
+	UPROPERTY(EditAnywhere, Category = "HitBoxes")
+	UBoxComponent* foot_r;
+
 private:
 
 	UPROPERTY(VisibleAnywhere, Category =  Camera )
