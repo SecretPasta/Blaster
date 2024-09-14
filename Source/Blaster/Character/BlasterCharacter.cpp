@@ -98,15 +98,15 @@ ABlasterCharacter::ABlasterCharacter()
 	spine_03->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	HitCollisionBoxes.Add(FName("spine_03"), spine_03);
 
-	uppperarm_l = CreateDefaultSubobject<UBoxComponent>(TEXT("uppperarm_l"));
-	uppperarm_l->SetupAttachment(GetMesh(), FName("uppperarm_l"));
-	uppperarm_l->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	HitCollisionBoxes.Add(FName("uppperarm_l"), uppperarm_l);
+	upperarm_l = CreateDefaultSubobject<UBoxComponent>(TEXT("upperarm_l"));
+	upperarm_l->SetupAttachment(GetMesh(), FName("upperarm_l"));
+	upperarm_l->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	HitCollisionBoxes.Add(FName("upperarm_l"), upperarm_l);
 
-	uppperarm_r = CreateDefaultSubobject<UBoxComponent>(TEXT("uppperarm_r"));
-	uppperarm_r->SetupAttachment(GetMesh(), FName("uppperarm_r"));
-	uppperarm_r->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	HitCollisionBoxes.Add(FName("uppperarm_r"), uppperarm_r);
+	upperarm_r = CreateDefaultSubobject<UBoxComponent>(TEXT("upperarm_r"));
+	upperarm_r->SetupAttachment(GetMesh(), FName("upperarm_r"));
+	upperarm_r->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	HitCollisionBoxes.Add(FName("upperarm_r"), upperarm_r);
 
 	lowerarm_l = CreateDefaultSubobject<UBoxComponent>(TEXT("lowerarm_l"));
 	lowerarm_l->SetupAttachment(GetMesh(), FName("lowerarm_l"));

@@ -120,10 +120,10 @@ protected:
 	UBoxComponent* spine_03;
 
 	UPROPERTY(EditAnywhere, Category = "HitBoxes")
-	UBoxComponent* uppperarm_l;
+	UBoxComponent* upperarm_l;
 
 	UPROPERTY(EditAnywhere, Category = "HitBoxes")
-	UBoxComponent* uppperarm_r;
+	UBoxComponent* upperarm_r;
 
 	UPROPERTY(EditAnywhere, Category = "HitBoxes")
 	UBoxComponent* lowerarm_l;

@@ -63,7 +63,7 @@ void AShotgun::FireShotgun(const TArray<FVector_NetQuantize>& HitTargets)
 			);
 		}
 	}
-	for (auto HitPair : HitMap)
+	for (auto& HitPair : HitMap)
 	{
 		if (HitPair.Key && HasAuthority() && InstigatorController)
 		{
