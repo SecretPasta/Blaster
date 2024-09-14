@@ -28,11 +28,36 @@ void ULagCompensationComponent::SaveFramePackage(FFramePackage& Package)
 		for (auto& BoxPair : Character->HitCollisionBoxes) {
 			FBoxInformation BoxInformation;
 			BoxInformation.Location = BoxPair.Value->GetComponentLocation();
-			BoxInformation.Rotaion = BoxPair.Value->GetComponentRotation();
+			BoxInformation.Rotation = BoxPair.Value->GetComponentRotation();
 			BoxInformation.BoxExtent = BoxPair.Value->GetScaledBoxExtent();
 			Package.HitBoxInfo.Add(BoxPair.Key, BoxInformation);
 		}
 	}
+}
+
+FFramePackage ULagCompensationComponent::InterpBetweenFrames(const FFramePackage& OlderFrame, const FFramePackage& YoungerFrame, float HitTime)
+{
+	const float Distance = YoungerFrame.Time - OlderFrame.Time;
+	const float InterpFraction = FMath::Clamp((HitTime - OlderFrame.Time) / Distance, 0.f, 1.f);
+
+	FFramePackage InterpFramePackage;
+	InterpFramePackage.Time = HitTime;
+
+	for (auto& YoungerPair : YoungerFrame.HitBoxInfo) {
+		const FName& BoxInfoName = YoungerPair.Key;
+		const FBoxInformation& OlderBox = OlderFrame.HitBoxInfo[BoxInfoName];
+		const FBoxInformation& YoungerBox = YoungerFrame.HitBoxInfo[BoxInfoName];
+
+		FBoxInformation InterpBoxInfo;
+
+		InterpBoxInfo.Location = FMath::VInterpTo(OlderBox.Location, YoungerBox.Location, 1.f, InterpFraction);
+		InterpBoxInfo.Rotation = FMath::RInterpTo(OlderBox.Rotation, YoungerBox.Rotation, 1.f, InterpFraction);
+		InterpBoxInfo.BoxExtent = YoungerBox.BoxExtent;
+		
+		InterpFramePackage.HitBoxInfo.Add(BoxInfoName, InterpBoxInfo);
+	}
+
+	return InterpFramePackage;
 }
 
 void ULagCompensationComponent::ShowFramePackage(const FFramePackage& Package, const FColor& Color)
@@ -42,7 +67,7 @@ void ULagCompensationComponent::ShowFramePackage(const FFramePackage& Package, c
 			GetWorld(), 
 			BoxInfo.Value.Location, 
 			BoxInfo.Value.BoxExtent, 
-			FQuat(BoxInfo.Value.Rotaion), 
+			FQuat(BoxInfo.Value.Rotation),
 			Color,
 			false,
 			4.f);
@@ -94,7 +119,7 @@ void ULagCompensationComponent::ServerSideRewind(ABlasterCharacter* HitCharacter
 	}
 
 	if (bShouldInterpolate) {
-		// Interpolate between younger and older
+			// Interpolate between younger and older
 	}
 
 	if (bReturn) {
