@@ -364,6 +364,7 @@ public:
 
 	FORCEINLINE UCombatComponent* GetCombat() const { return Combat; }
 	FORCEINLINE UBuffComponent* GetBuff() const { return Buff; }
+	FORCEINLINE ULagCompensationComponent* GetLagCompensation() const { return LagCompensation; }
 
 	FORCEINLINE bool GetDisableGameplay() const { return bDisableGameplay; }
 	FORCEINLINE UAnimMontage* GetReloadMontage() const { return ReloadMontage; }
