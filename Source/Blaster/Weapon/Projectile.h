@@ -20,6 +20,18 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* CollisionBox;
 
+	//
+	//Used with ServerSideRewind
+	// 
+		
+	bool bUseServerSideRewind;
+
+	FVector_NetQuantize TraceStart;
+	FVector_NetQuantize100 InitialVelocity;
+
+	UPROPERTY(EditAnywhere)
+	float InitialSpeed = 15000.f;
+		
 protected:
 	virtual void BeginPlay() override;
 	
