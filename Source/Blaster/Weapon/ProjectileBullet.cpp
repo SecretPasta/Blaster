@@ -51,7 +51,7 @@ void AProjectileBullet::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, 
 void AProjectileBullet::BeginPlay()
 {
 	Super::BeginPlay();
-
+	/*
 	FPredictProjectilePathParams PathParams;
 	FPredictProjectilePathResult PathResult;
 
@@ -67,5 +67,5 @@ void AProjectileBullet::BeginPlay()
 	PathParams.TraceChannel = ECollisionChannel::ECC_Visibility;
 	PathParams.ActorsToIgnore.Add(this);
 
-	UGameplayStatics::PredictProjectilePath(this, PathParams, PathResult);
+	UGameplayStatics::PredictProjectilePath(this, PathParams, PathResult);*/
 }
