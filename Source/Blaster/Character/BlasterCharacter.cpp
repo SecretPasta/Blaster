@@ -453,6 +453,14 @@ void ABlasterCharacter::PlayThrowGrenadeMontage()
 	}
 }
 
+void ABlasterCharacter::PlaySwapMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && SwapMontage) {
+		AnimInstance->Montage_Play(SwapMontage);
+	}
+}
+
 void ABlasterCharacter::PlayHitReactMontage()
 {
 	if (Combat == nullptr || Combat->EquippedWeapon == nullptr) {
@@ -697,8 +705,17 @@ void ABlasterCharacter::OnRep_OverlappingWeapon(AWeapon* LastWeapon)
 
 void ABlasterCharacter::SwitchWeaponButtonPressed()
 {
-	if (Combat) {
-		ServerSwitchButtonButtonPressed();
+	if (Combat) 
+	{
+		if (Combat->CombatState == ECombatState::ECS_Unoccupied) {
+			ServerSwitchButtonButtonPressed();
+		}
+		if (Combat->ShouldSwapWeapons() && !HasAuthority() && Combat->CombatState == ECombatState::ECS_Unoccupied) //Make sure this doesn't cause bugs Doot 
+		{
+			PlaySwapMontage();
+			Combat->CombatState = ECombatState::ECS_SwitchingWeapons;
+			bFinishedSwapping = false;
+		}
 	}
 }
 

@@ -239,7 +239,6 @@ void AWeapon::OnEquippedSecondary()
 		WeaponMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_TAN);
 		WeaponMesh->MarkRenderStateDirty();
 	}
-	EnableCustomDepth(true);
 	if (BlasterOwnerCharacter)
 	{
 		BlasterOwnerController = BlasterOwnerController == nullptr ? Cast<ABlasterPlayerController>(BlasterOwnerCharacter->GetController()) : BlasterOwnerController;
