@@ -8,6 +8,7 @@
 #include "GameFramework/PlayerStart.h"
 #include "Blaster/PlayerState/BlasterPlayerState.h"
 #include "Blaster/GameState/BlasterGameState.h"
+#include "Blaster/PlayerState/BlasterPlayerState.h"
 
 namespace MatchState
 {
@@ -81,7 +82,7 @@ void ABlasterGameMode::PlayerEliminated(ABlasterCharacter* ElimmedCharacter, ABl
 	}
 
 	if (ElimmedCharacter) {
-		ElimmedCharacter->Elim();
+		ElimmedCharacter->Elim(false);
 
 	}
 
@@ -101,5 +102,26 @@ void ABlasterGameMode::RequestRespawn(ACharacter* ElimmedCharacter, AController*
 		RestartPlayerAtPlayerStart(ElimmedController, PlayerStarts[Selection]);
 	}
 }
+
+void ABlasterGameMode::PlayerLeftGame(ABlasterPlayerState* PlayerLeaving)
+{
+	ABlasterGameState* BlasterGameState = GetGameState<ABlasterGameState>();
+
+	if (PlayerLeaving == nullptr || BlasterGameState == nullptr)
+	{
+		return;
+	}
+
+	if (BlasterGameState->TopScoringPlayers.Contains(PlayerLeaving))
+	{
+		BlasterGameState->TopScoringPlayers.Remove(PlayerLeaving);
+	}
+	ABlasterCharacter* CharacterLeaving = Cast<ABlasterCharacter>(PlayerLeaving->GetPawn());
+	if (CharacterLeaving)
+	{
+		CharacterLeaving->Elim(true);
+	}
+}
+
 
 

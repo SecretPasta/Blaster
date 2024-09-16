@@ -26,6 +26,9 @@ protected:
 
 	UFUNCTION()
 	void OnDestroySesion(bool bWasSuccessful);
+
+	UFUNCTION()
+	void OnPlayerLeftGame();
 private:
 
 	UPROPERTY(meta = (BindWidget))
