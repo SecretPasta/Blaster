@@ -84,14 +84,14 @@ protected:
 
 	void ShotgunLocalFire(const TArray<FVector_NetQuantize>& TraceHitTarget);
 
-	UFUNCTION(Server, Reliable)
-	void ServerFire(const FVector_NetQuantize& TraceHitTarget);
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerFire(const FVector_NetQuantize& TraceHitTarget, float FireDelay);
 
 	UFUNCTION(Server, Reliable)
 	void MulticastFire(const FVector_NetQuantize& TraceHitTarget);
 
-	UFUNCTION(NetMulticast, Reliable)
-	void ServerShotgunFire(const TArray<FVector_NetQuantize>& HitTargets);
+	UFUNCTION(NetMulticast, Reliable, WithValidation)
+	void ServerShotgunFire(const TArray<FVector_NetQuantize>& HitTargets, float FireDelay);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastShotgunFire(const TArray<FVector_NetQuantize>& HitTargets);

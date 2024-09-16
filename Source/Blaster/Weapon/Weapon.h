@@ -103,7 +103,7 @@ public:
 	EFireType FireType;
 
 	//**
-// Trace end with scatter*//
+	// Trace end with scatter*//
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Scatter")
 	float DistanceToSphere = 800.f;
