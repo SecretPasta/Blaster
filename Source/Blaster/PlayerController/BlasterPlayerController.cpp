@@ -18,6 +18,7 @@
 #include "Blaster/Weapon/Weapon.h"
 #include "Components/Image.h"
 #include "GameFramework/PlayerState.h"
+#include "Blaster/HUD/ReturnToMainMenu.h"
 
 
 void ABlasterPlayerController::BeginPlay()
@@ -461,6 +462,41 @@ void ABlasterPlayerController::PollInit()
 }
 
 
+void ABlasterPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	if (InputComponent == nullptr)
+	{
+		return;
+	}
+	InputComponent->BindAction("Quit", IE_Pressed, this, &ABlasterPlayerController::ShowReturnToMainMenu);
+}
+
+void ABlasterPlayerController::ShowReturnToMainMenu()
+{
+	//TODO show the return to main menu widget
+	if (ReturnToMainMenuWidget == nullptr) 
+	{
+		return;
+	}
+
+	if (ReturnToMainMenu == nullptr)
+	{
+		ReturnToMainMenu = CreateWidget<UReturnToMainMenu>(this, ReturnToMainMenuWidget);
+	}
+	if (ReturnToMainMenu)
+	{
+		bReturnToMainMenuOpen = !bReturnToMainMenuOpen;
+		if (bReturnToMainMenuOpen)
+		{
+			ReturnToMainMenu->MenuSetup();
+		}
+		else
+		{
+			ReturnToMainMenu->MenuTearDown();
+		}
+	}
+}
 
 void ABlasterPlayerController::ServerRequestServerTime_Implementation(float TimeOfClientRequest)
 {
