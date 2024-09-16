@@ -20,7 +20,6 @@
 #include "GameFramework/PlayerState.h"
 
 
-
 void ABlasterPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -56,12 +55,18 @@ void ABlasterPlayerController::CheckPing(float DeltaTime)
 		PlayerState = PlayerState == nullptr ? GetPlayerState<APlayerState>() : PlayerState.Get();
 		if (PlayerState)
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("Ping: %f "), PlayerState->GetPingInMilliseconds());
+			UE_LOG(LogTemp, Warning, TEXT("Ping: %f "), PlayerState->GetPingInMilliseconds());
 			if (PlayerState->GetPingInMilliseconds()  > HighPingThreshold) 
 			{
 				HighPingWarning();
 				PingAnimationRunningTime = 0.f;
+				ServerReportPingStatus(true);
 			}
+			else
+			{
+				ServerReportPingStatus(false);
+			}
+
 		}
 		HighPingRunningTime = 0.f;
 	}
@@ -79,7 +84,11 @@ void ABlasterPlayerController::CheckPing(float DeltaTime)
 	}
 }
 
-
+//Is the ping to high?
+void ABlasterPlayerController::ServerReportPingStatus_Implementation(bool bHighPing)
+{
+	HighPingDelegate.Broadcast(bHighPing);
+}
 
 void ABlasterPlayerController::CheckTimeSync(float DeltaTime)
 {
