@@ -70,10 +70,17 @@ public:
 
 	bool bFinishedSwapping = false;
 
-	FOnLeftGame OnLeftGame;
-
 	UFUNCTION(Server, Reliable)
 	void ServerLeaveGame();
+
+	FOnLeftGame OnLeftGame;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastGainedTheLead();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastLostTheLead();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -318,7 +325,7 @@ private:
 	UMaterialInstance* DissolveMaterialInstance;
 
 	/**
-	* Elim Bot
+	* Elim Effects
 	**/
 	UPROPERTY(EditAnywhere, Category = "Elim")
 	UParticleSystem* ElimBotEffect;
@@ -331,6 +338,12 @@ private:
 
 	UPROPERTY()
 	class ABlasterPlayerState* BlasterPlayerState;
+
+	UPROPERTY(EditAnywhere, Category = "Elim")
+	class UNiagaraSystem* CrownSystem;
+
+	UPROPERTY()
+	class UNiagaraComponent* CrownComponent;
 
 	//**
 	// Grenade*//
