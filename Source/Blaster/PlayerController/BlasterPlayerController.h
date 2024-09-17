@@ -59,6 +59,8 @@ public:
 	float SingleTripTime = 0.f;
 
 	FHighPingDelegate HighPingDelegate;
+
+	void BroadcastElim(ABlasterPlayerState* Attacker, ABlasterPlayerState* Victim);
 protected:
 
 	virtual void SetupInputComponent() override;
@@ -104,6 +106,9 @@ protected:
 	void CheckPing(float DeltaTime);
 
 	void ShowReturnToMainMenu();
+
+	UFUNCTION(Client,Reliable)
+	void ClientElimAnnouncement(ABlasterPlayerState* Attacker, ABlasterPlayerState* Victim);
 
 private:
 
