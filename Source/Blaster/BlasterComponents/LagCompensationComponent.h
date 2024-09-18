@@ -97,8 +97,8 @@ public:
 		ABlasterCharacter* HitCharacter, 
 		const FVector_NetQuantize& TraceStart, 
 		const FVector_NetQuantize& HitLocation, 
-		float HitTime, 
-		class AWeapon* DamageCauser);
+		float HitTime 
+		);
 
 	UFUNCTION(Server, Reliable)
 	void ProjectileServerScoreRequest(
