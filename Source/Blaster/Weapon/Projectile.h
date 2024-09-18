@@ -32,8 +32,14 @@ public:
 	UPROPERTY(EditAnywhere)
 	float InitialSpeed = 15000.f;
 		
-	UPROPERTY()
+	// Only set this for Greandes and Rockets
+	UPROPERTY(EditAnywhere)
 	float Damage = 20.f;
+
+
+	//Doesn't matter for greandes and rockets
+	UPROPERTY(EditAnywhere)
+	float HeadShotDamage = 40.f;
 
 protected:
 	virtual void BeginPlay() override;
@@ -81,10 +87,10 @@ protected:
 	float MinimumDamage = 10.f;
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
-	float InnerRadiusDamage = 200.f;
+	float InnerDamageRadius = 200.f;
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
-	float OuterRadiusDamage = 500.f;
+	float OuterDamageRadius = 500.f;
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float DamageFalloff = 1.f;
