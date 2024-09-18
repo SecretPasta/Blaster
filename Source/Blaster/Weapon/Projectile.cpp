@@ -83,8 +83,8 @@ void AProjectile::ExplodeDamage()
 				Damage, // BaseDamage
 				10.f, // MinimumDamage
 				GetActorLocation(), // Origin
-				InnerRadiusDamage, // DamageInnerRadius
-				OuterRadiusDamage, // DamageOuterRadius
+				InnerDamageRadius, // DamageInnerRadius
+				OuterDamageRadius, // DamageOuterRadius
 				1.f, // DamageFalloff
 				UDamageType::StaticClass(), // DamageTypeClass
 				TArray<AActor*>(), // IgnoreActors
