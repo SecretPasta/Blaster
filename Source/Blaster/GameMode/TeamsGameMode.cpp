@@ -45,7 +45,7 @@ void ATeamsGameMode::Logout(AController* Exiting)
 		}
 		if (BGameState->BlueTeam.Contains(BPState))
 		{
-			BGameState->RedTeam.Remove(BPState);
+			BGameState->BlueTeam.Remove(BPState);
 		}
 	
 		
