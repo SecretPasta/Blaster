@@ -42,7 +42,7 @@ public:
 
 	float LevelStartingTime = 0.f;
 
-
+	virtual float CalculateDamage(AController* Attacker, AController* Victim, float BaseDamage);
 
 protected:
 
