@@ -46,13 +46,18 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	void HideTeamScores();
+	void InitTeamScores();
+	void SetHUDRedTeamScore(int32 RedScore);
+	void SetHUDBlueTeamScore(int32 BlueScore);
+
 	virtual float GetServerTime();//Synced with server world clock
 
 	virtual void ReceivedPlayer() override;//Synced with server clock as soon as possible
 
-	void OnMatchStateSet(FName State);
+	void OnMatchStateSet(FName State, bool bTeamsMatch = false);
 
-	void HandleMatchHasStarted();
+	void HandleMatchHasStarted(bool bTeamsMatch = false);
 
 	void HandleCooldown();
 
@@ -109,6 +114,12 @@ protected:
 
 	UFUNCTION(Client,Reliable)
 	void ClientElimAnnouncement(ABlasterPlayerState* Attacker, ABlasterPlayerState* Victim);
+
+	UPROPERTY(ReplicatedUsing = OnRep_ShowTeamsScores)
+	bool bShowTeamsScores = false;
+
+	UFUNCTION()
+	void OnRep_ShowTeamsScores();
 
 private:
 
