@@ -1134,15 +1134,6 @@ ECombatState ABlasterCharacter::GetCombatState() const
 	return Combat->CombatState;
 }
 
-bool ABlasterCharacter::IsLocallyReloading()
-{
-	if (Combat == nullptr) {
-		return false;
-	}
-
-	return Combat->bLocallyReloading;
-}
-
 bool ABlasterCharacter::IsHoldingTheFlag() const
 {
 	if (Combat == nullptr) {
@@ -1150,6 +1141,15 @@ bool ABlasterCharacter::IsHoldingTheFlag() const
 	}
 
 	return Combat->bHoldingTheFlag;
+}
+
+bool ABlasterCharacter::IsLocallyReloading()
+{
+	if (Combat == nullptr) {
+		return false;
+	}
+
+	return Combat->bLocallyReloading;
 }
 
 

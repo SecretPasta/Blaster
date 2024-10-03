@@ -425,7 +425,7 @@ public:
 	FORCEINLINE UAnimMontage* GetReloadMontage() const { return ReloadMontage; }
 	FORCEINLINE UStaticMeshComponent* GetAttachedGrenade() const { return AttachedGrenade; }
 
-	FORCEINLINE	bool IsHoldingTheFlag() const;
+	bool IsHoldingTheFlag() const;
 
 	bool IsLocallyReloading();
 
