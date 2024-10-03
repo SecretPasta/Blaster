@@ -105,6 +105,10 @@ protected:
 	void DropOrDestoryWeapon(AWeapon* Weapon);
 	void DropOrDestoryWeapons();
 
+	void SetSpawnPoint();
+
+	void OnPlayerStateInitialized();
+
 	void AimOffset(float DeltaTime);
 
 	void CaclulateAO_Pitch();
