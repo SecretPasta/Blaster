@@ -39,7 +39,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FinishSwapAttachWeapons();
 
-
 	void FireButtonPressed(bool bPressed);
 
 	UFUNCTION(BlueprintCallable)
@@ -266,6 +265,7 @@ private:
 
 	void UpdateHUDGrenades();
 
+	bool bHoldingTheFlag = false;
 
 public:	
 
