@@ -289,6 +289,10 @@ void ABlasterCharacter::DropOrDestoryWeapons()
 		if (Combat->SecondaryWeapon) {
 			DropOrDestoryWeapon(Combat->SecondaryWeapon);
 		}
+		if (Combat->TheFlag)
+		{
+			Combat->TheFlag->Dropped();
+		}
 	}
 }
 
@@ -1116,3 +1120,14 @@ bool ABlasterCharacter::IsHoldingTheFlag() const
 }
 
 
+ETeam ABlasterCharacter::GetTeam()
+{
+	BlasterPlayerState = BlasterPlayerState == nullptr ? GetPlayerState<ABlasterPlayerState>() : BlasterPlayerState;
+
+	if (BlasterPlayerState == nullptr)
+	{
+		return ETeam::ET_NoTeam;
+	}
+
+	return BlasterPlayerState->GetTeam();
+}
