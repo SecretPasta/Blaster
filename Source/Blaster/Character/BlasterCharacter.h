@@ -430,5 +430,7 @@ public:
 	bool IsLocallyReloading();
 
 	ETeam GetTeam();
+
+	void SetHoldingTheFlag(bool bHolding);
 };
 
