@@ -645,6 +645,10 @@ void ABlasterCharacter::EquipButtonPressed()
 		return;
 	}
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		ServerEquipButtonPressed();
 	}
 }
@@ -810,6 +814,10 @@ void ABlasterCharacter::SwitchWeaponButtonPressed()
 {
 	if (Combat) 
 	{
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		if (Combat->CombatState == ECombatState::ECS_Unoccupied) {
 			ServerSwitchButtonButtonPressed();
 		}
@@ -831,6 +839,10 @@ void ABlasterCharacter::ServerSwitchButtonButtonPressed_Implementation()
 
 void ABlasterCharacter::CrouchButtonPressed()
 {
+	if (Combat && Combat->bHoldingTheFlag)
+	{
+		return;
+	}
 	if (bDisableGameplay) {
 		return;
 	}
@@ -848,6 +860,10 @@ void ABlasterCharacter::ReloadButtonPressed()
 		return;
 	}
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		Combat->Reload();
 	}
 }
@@ -858,7 +874,12 @@ void ABlasterCharacter::AimButtonPressed()
 		return;
 	}
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		Combat->SetAiming(true);
+
 	}
 }
 
@@ -868,6 +889,10 @@ void ABlasterCharacter::AimButtonReleased()
 		return;
 	}
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		Combat->SetAiming(false);
 	}
 }
@@ -878,6 +903,10 @@ void ABlasterCharacter::FireButtonPressed()
 		return;
 	}
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		Combat->FireButtonPressed(true);
 	}
 }
@@ -888,6 +917,10 @@ void ABlasterCharacter::FireButtonReleased()
 		return;
 	}
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		Combat->FireButtonPressed(false);
 	}
 }
@@ -895,6 +928,10 @@ void ABlasterCharacter::FireButtonReleased()
 void ABlasterCharacter::GrenadeButtonPressed()
 {
 	if (Combat) {
+		if (Combat->bHoldingTheFlag)
+		{
+			return;
+		}
 		Combat->ThrowGrenade();
 	}
 }
@@ -981,6 +1018,10 @@ void ABlasterCharacter::SimProxiesTurn()
 
 void ABlasterCharacter::Jump()
 {
+	if (Combat && Combat->bHoldingTheFlag)
+	{
+		return;
+	}
 	if (bDisableGameplay) {
 		return;
 	}
